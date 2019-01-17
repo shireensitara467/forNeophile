@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="D:/gegdc/MS481351/Assignment/assests/css/style.css">
+</head>
+<body>
+<div class="container">
+<div class="tab tab-1">
+<table id="table" border="1">
+<tr>
+<th>Employee ID</th>
+<th>Employee Name</th>
+<th>Employee Email</th>
+</tr>
+<tr>
+<td>123</td>
+<td>Shireen</td>
+<td>shir@gmail.com</td>
+</tr>
+<tr>
+<td>321</td>
+<td>aratis</td>
+<td>aratis@gmail.com</td>
+</tr>
+<tr>
+<td>567</td>
+<td>ishak</td>
+<td>ishak@gmail.com</td>
+</tr>
+</table>
+</div>
+<div class="tab tab-2">
+Employee Id :<input type="text" id="empid" onkeypress="isInputNumber(event)">
+Employee Name:<input type="text" id="empname" onkeypress="checkNum();">
+Employee Email:<input type="text" id="empemail" onblur="validateEmail(this.value);">
+<button onclick="addRow();">Add</button>
+<button onclick="editRow();">Edit</button>
+<button onclick="deleteRow();">Remove</button>
+</div>
+</div>
+<script>
+var rIndex,
+	table=document.getElementById('table');
+	function checkEmpty(){
+	var isEmpty=false,
+	empname=document.getElementById('empname').value,
+	empid=document.getElementById('empid').value,
+	empemail=document.getElementById('empemail').value;
+	
+	if(empid===""){
+	alert("Employee id cannot be empty");
+	isEmpty=true;
+	}
+	else if(empname===""){
+	alert("Employee name cannot be empty");
+	isEmpty=true;
+	}
+	if(empemail===""){
+	alert("Employee email cannot be empty");
+	isEmpty=true;
+	}
+	return isEmpty;
+	}
+function addRow(){
+if(!checkEmpty()){
+var newRow=table.insertRow(table.length),
+cell1=newRow.insertCell(0),
+cell2=newRow.insertCell(1),
+cell3=newRow.insertCell(2),
+empname=document.getElementById('empname').value,
+empid=document.getElementById('empid').value,
+empemail=document.getElementById('empemail').value;
+
+cell1.innerHTML=empid;
+cell2.innerHTML=empname;
+cell3.innerHTML=empemail;
+
+selectedRowToInput();
+}
+}
+function selectedRowToInput(){
+
+for(var i=1;i<table.rows.length;i++){
+table.rows[i].onclick=function(){
+rIndex=this.rowIndex;
+//console.log(rIndex);
+document.getElementById('empid').value=this.cells[0].innerHTML;
+document.getElementById('empname').value=this.cells[1].innerHTML;
+document.getElementById('empemail').value=this.cells[2].innerHTML;
+}
+}
+}
+selectedRowToInput();
+
+function editRow(){
+var employeeid=document.getElementById('empid').value,
+employeename=document.getElementById('empname').value,
+employeeemail=document.getElementById('empemail').value;
+table.rows[rIndex].cells[0].innerHTML=employeeid;
+table.rows[rIndex].cells[1].innerHTML=employeename;
+table.rows[rIndex].cells[2].innerHTML=employeeemail;
+}
+
+function deleteRow(){
+
+ var result= confirm("Are you sure you want to delete?");
+if (!result) { 
+return false
+ }
+
+ else if(result="ok"){
+ table.deleteRow(rIndex);
+ //clear input text
+document.getElementById('empid').value="";
+document.getElementById('empname').value="";
+document.getElementById('empemail').value="";
+}
+}
+
+</script>
+<script>
+function isInputNumber(evt){
+                
+                var ch = String.fromCharCode(evt.which);
+                
+                if(!(/[0-9]/.test(ch))){
+                    evt.preventDefault();
+                }
+				else{
+				alert("Enter valid Employee ID");
+				}
+                
+            }
+function checkNum()
+{
+
+if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123) || event.keyCode == 8)
+   return true;
+else
+   {
+       alert("Please enter only Employee Name");
+       return false;
+	   
+   }
+
+}
+
+function validateEmail(emailField){ 
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/; 
+
+        if (reg.test(emailField.value) == false)  
+         { 
+             alert('Invalid Email Address'); 
+            return false;
+        } 
+
+        return true;
+
+}
+
+</script>
+
+</body>
+</html>
+
